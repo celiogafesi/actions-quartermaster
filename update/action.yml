@@ -3,7 +3,7 @@ description: 'Update Helm dependencies'
 author: 'Soren Mathiasen'
 runs:
   using: 'docker'
-  image: 'docker://eu.gcr.io/tradeshift-public/helm-linter-update:1.0.0'
+  image: 'docker://eu.gcr.io/tradeshift-public/helm-linter-update:1.1.0'
 branding:
   icon: 'check-square'
   color: 'blue'
