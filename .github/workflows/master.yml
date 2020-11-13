@@ -1,0 +1,32 @@
+name: Master build
+
+on:
+  push:
+    branches: [master]
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+        - name: Docker build lint
+        uses: tradeshift/actions-docker-gcr/build@master
+        env:
+          IMAGE: tradeshift-public/helm-check
+          WORKDIR: lint
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+
+      - name: Docker build kubeval
+        uses: tradeshift/actions-docker-gcr/build@master
+        env:
+          IMAGE: tradeshift-public/helm-linter-kubeval
+          TAG: kubeval
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+          
+      - name: Docker build update
+        uses: tradeshift/actions-docker-gcr/build@master
+        env:
+          IMAGE: tradeshift-public/helm-linter-update
+          TAG: update
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+          

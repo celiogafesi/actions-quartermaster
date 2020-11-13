@@ -1,0 +1,34 @@
+name: Pull request
+
+on:
+  pull_request:
+    types: [opened, reopened, edited, synchronize]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Docker build kubeval
+        uses: tradeshift/actions-docker-gcr/build@master
+        env:
+          IMAGE: tradeshift-public/helm-linter-kubeval
+          TAG: dev
+          WORKDIR: kubeval
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+          
+      - name: Docker build update
+        uses: tradeshift/actions-docker-gcr/build@master
+        env:
+          IMAGE: tradeshift-public/helm-linter-update
+          TAG: dev
+          WORKDIR: update
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+
+      - name: Docker Push
+        uses: tradeshift/actions-docker-gcr/push@master
+        env:
+          IMAGE: tradeshift-public/helm-linter-kubeval
+          GCLOUD_REGISTRY: eu.gcr.io
+          GCLOUD_SERVICE_ACCOUNT_KEY: ${{ secrets.GCLOUD_SERVICE_ACCOUNT_KEY }}
+            

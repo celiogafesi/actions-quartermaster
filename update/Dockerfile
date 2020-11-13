@@ -1,4 +1,4 @@
-FROM lachlanevenson/k8s-helm:v2.16.1
+FROM lachlanevenson/k8s-helm:v2.16.9
 
 RUN apk add bash
 
