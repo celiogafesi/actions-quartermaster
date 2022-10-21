@@ -1,9 +1,13 @@
-name: 'Quartermaster linter update chart dependencies'
-description: 'Update Helm dependencies'
-author: 'Soren Mathiasen'
+name: "Quartermaster linter update chart dependencies"
+description: "Update Helm dependencies"
+author: "Soren Mathiasen"
 runs:
-  using: 'docker'
-  image: 'docker://eu.gcr.io/tradeshift-public/helm-linter-update:latest'
+  using: "composite"
+  steps:
+    - shell: bash
+      run: |
+        docker pull eu.gcr.io/tradeshift-public/helm-linter-update:latest
+        docker run -v ${PWD}:/tmp/test -w /tmp/test eu.gcr.io/tradeshift-public/helm-linter-update:latest
 branding:
-  icon: 'check-square'
-  color: 'blue'
+  icon: "check-square"
+  color: "blue"
