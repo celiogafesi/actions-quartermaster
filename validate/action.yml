@@ -3,8 +3,9 @@ description: Action to validate chart configurations with policies
 runs:
   using: "composite"
   steps:
-    - name: Apply Kyverno
-      uses: tradeshift/actions-quartermaster/kyverno@master
+#     Exclude Kyverno for now to speed up build. Will revisit after PoC is done.
+#    - name: Apply Kyverno
+#      uses: tradeshift/actions-quartermaster/kyverno@master
 
     - name: Run quartermaster
       uses: tradeshift/actions-quartermaster/quartermaster@master
